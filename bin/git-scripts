@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+var spawn = require('child_process').spawn
+  , program = require('commander')
+  , pkg = require('../package.json')
+  , fs = require('fs');
+
+program
+  .version(pkg.version)
+  .usage('<command> [options]')
+  .parse(process.argv);
+
+program.on('--help', function() {
+  console.log('  Commands:');
+  console.log();
+  console.log('    install [path]           install git-hooks');
+  console.log('    uninstall [path]         uninstall git-hooks');
+  console.log('    run <name> [args ...]    run git-hooks script');
+  console.log();
+  process.exit();
+});
+
+var args = program.args.slice(1)
+  , cmd = program.args[0];
+
+if (!cmd) {
+  process.stdout.write(program.helpInformation());
+  program.emit('--help');
+  process.exit();
+}
+
+// execute the subcommand.
+
+var bin = __dirname + '/git-scripts-' + cmd
+  , proc = spawn(bin, args, {stdio: 'inherit', customFds: [0, 1, 2]});
+
+proc.on('close', function(code) {
+  process.exit(code);
+});

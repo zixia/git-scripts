@@ -1,0 +1,34 @@
+{
+  "name": "git-scripts",
+  "version": "0.0.0",
+  "description": "git hooks management for Node.js projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha --reporter dot",
+    "postinstall": "./bin/install",
+    "postupdate": "./bin/install",
+    "preuninstall": "./bin/uninstall"
+  },
+  "bin": {
+    "git-scripts": "./bin/git-scripts"
+  },
+  "keywords": [
+    "git",
+    "hooks",
+    "npm",
+    "scripts"
+  ],
+  "author": "Naoyuki Kanezawa <naoyuki.kanezawa@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "*"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nkzawa/git-scripts.git"
+  }
+}

@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+var program = require('commander')
+  , scripts = require('../')
+  , project = scripts();
+
+
+program
+  .usage('<name> [args ...]')
+  .parse(process.argv);
+
+var name = program.args.shift();
+if (!name) {
+  process.stdout.write(program.helpInformation());
+  process.exit();
+}
+
+project.run(name, program.args, function(err) {
+  if (err) throw err;
+});
+
