@@ -4,7 +4,8 @@
   "description": "git hooks management for Node.js projects",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha --reporter dot",
+    "test": "make test",
+    "prepublish": "make build",
     "postinstall": "./bin/install",
     "postupdate": "./bin/install",
     "preuninstall": "./bin/uninstall"
@@ -24,11 +25,17 @@
     "commander": "*"
   },
   "devDependencies": {
+    "git-scripts": "*",
     "mocha": "*",
     "chai": "*"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/nkzawa/git-scripts.git"
+  },
+  "git": {
+    "scripts": {
+      "pre-commit": "npm test"
+    }
   }
 }
