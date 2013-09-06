@@ -193,6 +193,7 @@ describe('git-scripts', function() {
       it('should be an error when the command failed', function(done) {
         this.proj.run('bar', function(err) {
           expect(err).to.be.an.instanceof(Error);
+          expect(err).to.have.property('code', 1);
           done();
         });
       });
