@@ -134,7 +134,7 @@ describe('git-scripts', function() {
     });
 
     describe('uninstall()', function() {
-      it('should succeed', function(done) {
+      it('should delete the symlink and move old hooks directory', function(done) {
         var self = this;
         this.proj.uninstall(function(err) {
           expect(fs.existsSync(self.proj.path + '/.git/hooks')).to.be.true;
@@ -180,6 +180,14 @@ describe('git-scripts', function() {
         this.proj.script('foo', function(err, cmd) {
           expect(err).to.not.exist;
           expect(cmd).to.equal('echo "hello, $0"');
+          done();
+        });
+      });
+
+      it('should not be error when the command does not exist', function(done) {
+        this.proj.script('any', function(err, cmd) {
+          expect(err).to.not.exist;
+          expect(cmd).to.not.exist;
           done();
         });
       });
