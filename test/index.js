@@ -9,7 +9,8 @@ var expect = require('chai').expect
 
 describe('git-scripts', function() {
   beforeEach(function(done) {
-    var path = os.tmpdir() + '/' + crypto.randomBytes(20).toString('hex')
+    // Node v0.8 doesn't support os.tmpdir
+    var path = os.tmpDir() + '/' + crypto.randomBytes(20).toString('hex')
       , self = this;
 
     fs.mkdir(path, 0700, function() {
