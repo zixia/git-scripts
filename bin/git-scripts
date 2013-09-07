@@ -13,9 +13,9 @@ program
 program.on('--help', function() {
   console.log('  Commands:');
   console.log();
-  console.log('    install [path]           install git-hooks');
-  console.log('    uninstall [path]         uninstall git-hooks');
-  console.log('    run <name> [args ...]    run git-hooks script');
+  console.log('    install [path]           install git-scripts');
+  console.log('    uninstall [path]         uninstall git-scripts');
+  console.log('    run <name> [args ...]    run arbitrary scripts');
   console.log();
   process.exit();
 });
