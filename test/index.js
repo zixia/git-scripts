@@ -170,7 +170,7 @@ describe('git-scripts', function() {
   describe('when the path has package.json', function() {
     beforeEach(function(done) {
       var pkg = {git: {scripts: {
-        foo: 'echo "hello, $0"',
+        foo: 'echo "hello, $1"',
         bar: 'exit 1'
       }}};
       fs.writeFile(this.proj.path + '/package.json', JSON.stringify(pkg), done);
@@ -180,7 +180,7 @@ describe('git-scripts', function() {
       it('should parse command', function(done) {
         this.proj.script('foo', function(err, cmd) {
           expect(err).to.not.exist;
-          expect(cmd).to.equal('echo "hello, $0"');
+          expect(cmd).to.equal('echo "hello, $1"');
           done();
         });
       });
