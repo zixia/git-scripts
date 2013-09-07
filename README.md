@@ -61,6 +61,8 @@ Usage: git-scripts <command> [options]
 NOTE: Usually, you don't need CLI. Hooks are enabled automatically when you install the module locally.
 
 ## Using Programmatically
+If you would like to use git-scripts programmatically, you can do that.
+
 ```js
 var scripts = require('git-scripts');
 var project = scripts('somewhere/yourproject');
