@@ -1,26 +1,23 @@
 var expect = require('chai').expect
-  , os = require('os')
   , fs = require('fs')
   , path = require('path')
-  , crypto = require('crypto')
   , exec = require('child_process').exec
-  , scripts = require('../');
+  , rimraf = require('rimraf')
+  , scripts = require('../')
+  , support = require('./support');
 
 
 describe('git-scripts', function() {
   beforeEach(function(done) {
-    // Node v0.8 doesn't support os.tmpdir
-    var path = os.tmpDir() + '/' + crypto.randomBytes(20).toString('hex')
-      , self = this;
-
-    fs.mkdir(path, 0700, function() {
+    var self = this;
+    support.mktmpdir(function(err, path) {
       self.proj = scripts(path);
-      done();
+      done(err);
     });
   });
 
   afterEach(function(done) {
-    exec('rm -rf ' + this.proj.path, done);
+    rimraf(this.proj.path, done);
   });
 
   describe('when the path is not a git repo', function() {
@@ -111,7 +108,8 @@ describe('git-scripts', function() {
   describe('when installed', function() {
     beforeEach(function(done) {
       var self = this;
-      exec('git init', {cwd: this.proj.path}, function() {
+      exec('git init', {cwd: this.proj.path}, function(err) {
+        if (err) return done(err);
         self.proj.install(done);
       });
     });

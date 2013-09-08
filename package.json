@@ -27,7 +27,8 @@
   "devDependencies": {
     "git-scripts": "*",
     "mocha": "*",
-    "chai": "*"
+    "chai": "*",
+    "rimraf": "*"
   },
   "repository": {
     "type": "git",
