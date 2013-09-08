@@ -6,6 +6,12 @@ Manage [git hooks](http://git-scm.com/book/en/Customizing-Git-Git-Hooks) with th
 
 ```json
 {
+  "name": "your-project",
+  "version": "0.0.0",
+  "description": "",
+  "devDependencies": {
+    "git-scripts": "*"
+  },
   "git": {
     "scripts": {
       "pre-commit": "npm test",
@@ -14,6 +20,8 @@ Manage [git hooks](http://git-scm.com/book/en/Customizing-Git-Git-Hooks) with th
   }
 }
 ```
+
+See also [this module's package.json](https://github.com/nkzawa/git-scripts/blob/master/package.json) as an example.
 
 ## Installation
     $ npm install git-scripts
@@ -94,7 +102,7 @@ Install git-scripts.
 Uninstall git-scripts.
 
 #### project.run(name, [args ...], [callback])
-Run arbitrary script of `name`.
+Run an arbitrary command of `name`.
 
 ## License
 MIT
