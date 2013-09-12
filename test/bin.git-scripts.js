@@ -3,16 +3,22 @@ var expect = require('chai').expect
   , path = require('path')
   , exec = require('child_process').exec
   , rimraf = require('rimraf')
-  , scripts = require('../')
-  , support = require('./support');
+  , mktmpdir = require('mktmpdir');
 
 
-process.env.PATH = __dirname + '/../bin:' + process.env.PATH
+describe('bin/git-scripts', function() {
+  before(function() {
+    this.PATH = process.env.PATH;
+    process.env.PATH = __dirname + '/../bin:' + process.env.PATH
+  });
 
-describe('bin', function() {
+  after(function() {
+    process.env.PATH = this.PATH;
+  });
+
   beforeEach(function(done) {
     var self = this;
-    support.mktmpdir(function(err, path) {
+    mktmpdir(function(err, path) {
       self.path = path;
       done(err);
     });
@@ -23,7 +29,7 @@ describe('bin', function() {
   });
 
   describe('when the path is not a git repo', function() {
-    describe('`git-scripts install`', function() {
+    describe('install', function() {
       it('shoud print a message to stderr', function(done) {
         exec('git-scripts install', {cwd: this.path}, function(err, stdout, stderr) {
           expect(stdout).to.be.empty;
@@ -33,7 +39,7 @@ describe('bin', function() {
       });
     });
 
-    describe('`git-scripts install <path>`', function() {
+    describe('install <path>', function() {
       it('shoud print a message to stderr', function(done) {
         exec('git-scripts install ' + this.path, function(err, stdout, stderr) {
           expect(stdout).to.be.empty;
@@ -49,7 +55,7 @@ describe('bin', function() {
       exec('git init', {cwd: this.path}, done);
     });
 
-    describe('`git-scripts install`', function() {
+    describe('install', function() {
       it('should move the old hooks directory and create the new symlink', function(done) {
         var self = this;
         exec('git-scripts install', {cwd: this.path}, function(err, stdout, stderr) {
@@ -63,7 +69,7 @@ describe('bin', function() {
       });
     });
 
-    describe('`git-scripts install <path>`', function() {
+    describe('install <path>', function() {
       it('should move the old hooks directory and create the new symlink', function(done) {
         var self = this;
         exec('git-scripts install ' + this.path, function(err, stdout, stderr) {
@@ -87,7 +93,7 @@ describe('bin', function() {
       });
     });
 
-    describe('`git-scripts install`', function() {
+    describe('install', function() {
       it('shoud exit gracefully ', function(done) {
         exec('git-scripts install', {cwd: this.path}, function(err, stdout, stderr) {
           expect(stdout).to.be.empty;
@@ -97,7 +103,7 @@ describe('bin', function() {
       });
     });
 
-    describe('`git-scripts install <path>`', function() {
+    describe('install <path>', function() {
       it('shoud exit gracefully ', function(done) {
         exec('git-scripts install ' + this.path, function(err, stdout, stderr) {
           expect(stdout).to.be.empty;

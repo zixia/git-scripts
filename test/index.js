@@ -3,15 +3,15 @@ var expect = require('chai').expect
   , path = require('path')
   , exec = require('child_process').exec
   , rimraf = require('rimraf')
-  , scripts = require('../')
-  , support = require('./support');
+  , mktmpdir = require('mktmpdir')
+  , scripts = require('../');
 
 
 describe('git-scripts', function() {
   beforeEach(function(done) {
     var self = this;
-    support.mktmpdir(function(err, path) {
-      self.proj = scripts(path);
+    mktmpdir(function(err, dir) {
+      self.proj = scripts(dir);
       done(err);
     });
   });

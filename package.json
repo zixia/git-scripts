@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "git-scripts": "*",
+    "mktmpdir": "*",
     "mocha": "*",
     "chai": "*",
     "rimraf": "*"
