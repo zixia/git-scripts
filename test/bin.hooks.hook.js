@@ -22,7 +22,13 @@ describe('bin/hooks/hook', function() {
       self.path = path;
       exec('git init', {cwd: path}, function(err) {
         if (err) return done(err);
-        exec('git-scripts install', {cwd: path}, done);
+        exec('git config user.email "foo@example.com"', {cwd: path}, function(err) {
+          if (err) return done(err);
+          exec('git config user.name "Foo"', {cwd: path}, function(err) {
+            if (err) return done(err);
+            exec('git-scripts install', {cwd: path}, done);
+          });
+        });
       });
     });
   });
