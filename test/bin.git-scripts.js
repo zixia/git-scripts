@@ -28,13 +28,24 @@ describe('bin/git-scripts', function() {
     rimraf(this.path, done);
   });
 
+  describe('no command', function() {
+    it('shoud print help information', function(done) {
+      exec('git-scripts', {cwd: this.path}, function(err, stdout, stderr) {
+        expect(stdout).to.contain('Usage: git-scripts <command> [options]');
+        expect(stderr).to.be.empty;
+        done(err);
+      });
+    });
+  });
+
   describe('when the path is not a git repo', function() {
     describe('install', function() {
       it('shoud print a message to stderr', function(done) {
         exec('git-scripts install', {cwd: this.path}, function(err, stdout, stderr) {
+          expect(err).to.not.exist;
           expect(stdout).to.be.empty;
           expect(stderr).to.not.be.empty;
-          done(err);
+          done();
         });
       });
     });
@@ -42,9 +53,32 @@ describe('bin/git-scripts', function() {
     describe('install <path>', function() {
       it('shoud print a message to stderr', function(done) {
         exec('git-scripts install ' + this.path, function(err, stdout, stderr) {
+          expect(err).to.not.exist;
           expect(stdout).to.be.empty;
           expect(stderr).to.not.be.empty;
-          done(err);
+          done();
+        });
+      });
+    });
+
+    describe('uninstall', function() {
+      it('shoud print a message to stderr', function(done) {
+        exec('git-scripts uninstall', {cwd: this.path}, function(err, stdout, stderr) {
+          expect(err).to.not.exist;
+          expect(stdout).to.be.empty;
+          expect(stderr).to.not.be.empty;
+          done();
+        });
+      });
+    });
+
+    describe('uninstall <path>', function() {
+      it('shoud print a message to stderr', function(done) {
+        exec('git-scripts uninstall ' + this.path, function(err, stdout, stderr) {
+          expect(err).to.not.exist;
+          expect(stdout).to.be.empty;
+          expect(stderr).to.not.be.empty;
+          done();
         });
       });
     });
@@ -82,6 +116,28 @@ describe('bin/git-scripts', function() {
         });
       });
     });
+
+    describe('uninstall', function() {
+      it('shoud print a message to stderr', function(done) {
+        exec('git-scripts uninstall', {cwd: this.path}, function(err, stdout, stderr) {
+          expect(err).to.not.exist;
+          expect(stdout).to.be.empty;
+          expect(stderr).to.not.be.empty;
+          done();
+        });
+      });
+    });
+
+    describe('uninstall <path>', function() {
+      it('shoud print a message to stderr', function(done) {
+        exec('git-scripts uninstall ' + this.path, function(err, stdout, stderr) {
+          expect(err).to.not.exist;
+          expect(stdout).to.be.empty;
+          expect(stderr).to.not.be.empty;
+          done();
+        });
+      });
+    });
   });
 
   describe('when installed', function() {
@@ -108,6 +164,30 @@ describe('bin/git-scripts', function() {
         exec('git-scripts install ' + this.path, function(err, stdout, stderr) {
           expect(stdout).to.be.empty;
           expect(stderr).to.be.empty;
+          done(err);
+        });
+      });
+    });
+
+    describe('uninstall', function() {
+      it('should restore the hooks directory', function(done) {
+        var self = this;
+        exec('git-scripts uninstall', {cwd: this.path}, function(err, stdout, stderr) {
+          var stat = fs.lstatSync(self.path + '/.git/hooks');
+          expect(stat.isSymbolicLink()).to.be.false;
+          expect(fs.existsSync(self.path + '/.git/hooks.old')).to.be.false;
+          done(err);
+        });
+      });
+    });
+
+    describe('uninstall <path>', function() {
+      it('should restore the hooks directory', function(done) {
+        var self = this;
+        exec('git-scripts uninstall ' + this.path, function(err, stdout, stderr) {
+          var stat = fs.lstatSync(self.path + '/.git/hooks');
+          expect(stat.isSymbolicLink()).to.be.false;
+          expect(fs.existsSync(self.path + '/.git/hooks.old')).to.be.false;
           done(err);
         });
       });
