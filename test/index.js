@@ -145,9 +145,9 @@ describe('git-scripts', function() {
   });
 
   describe('when the path has no package.json', function() {
-    describe('script()', function() {
+    describe('readCommand()', function() {
       it('should be an error', function(done) {
-        this.proj.script('foo', function(err, cmd) {
+        this.proj.readCommand('foo', function(err, cmd) {
           expect(err).to.be.an.instanceof(Error);
           expect(cmd).to.not.exist;
           done();
@@ -174,9 +174,9 @@ describe('git-scripts', function() {
       fs.writeFile(this.proj.path + '/package.json', JSON.stringify(pkg), done);
     });
 
-    describe('script()', function() {
+    describe('readCommand()', function() {
       it('should parse command', function(done) {
-        this.proj.script('foo', function(err, cmd) {
+        this.proj.readCommand('foo', function(err, cmd) {
           expect(err).to.not.exist;
           expect(cmd).to.equal('echo "hello, $1"');
           done();
@@ -184,7 +184,7 @@ describe('git-scripts', function() {
       });
 
       it('should not be error when the command does not exist', function(done) {
-        this.proj.script('any', function(err, cmd) {
+        this.proj.readCommand('any', function(err, cmd) {
           expect(err).to.not.exist;
           expect(cmd).to.not.exist;
           done();
