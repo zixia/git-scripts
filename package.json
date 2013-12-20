@@ -22,7 +22,7 @@
   "author": "Naoyuki Kanezawa <naoyuki.kanezawa@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "commander": "2.0.0"
+    "commander": "2.1.0"
   },
   "devDependencies": {
     "git-scripts": "*",
