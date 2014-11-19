@@ -6,12 +6,12 @@
   "scripts": {
     "test": "make test",
     "prepublish": "make build",
-    "postinstall": "./bin/install",
-    "postupdate": "./bin/install",
-    "preuninstall": "./bin/uninstall"
+    "postinstall": "node bin/install",
+    "postupdate": "node bin/install",
+    "preuninstall": "node bin/uninstall"
   },
   "bin": {
-    "git-scripts": "./bin/git-scripts"
+    "git-scripts": "node bin/git-scripts"
   },
   "keywords": [
     "git",
