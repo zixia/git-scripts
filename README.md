@@ -47,6 +47,7 @@ git-scripts supports all hooks including the following:
 * post-update
 * pre-auto-gc
 * post-rewrite
+* pre-push
 
 ## CLI
     $ npm install -g git-scripts
