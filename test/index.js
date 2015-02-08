@@ -93,6 +93,16 @@ describe('git-scripts', function() {
           done(err);
         });
       });
+
+      it('should work if no hooks directory exist', function(done) {
+        var hooksPath = this.proj.path + '/.git/hooks';
+        var self = this;
+
+        rimraf(hooksPath, function(err) {
+          if (err) throw err;
+          self.proj.install(done);
+        });
+      });
     });
 
     describe('uninstall()', function() {
