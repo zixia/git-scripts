@@ -22,13 +22,13 @@
   "author": "Naoyuki Kanezawa <naoyuki.kanezawa@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "commander": "2.5.0"
+    "commander": "2.6.0"
   },
   "devDependencies": {
     "chai": "~1.10.0",
-    "git-scripts": "*",
+    "git-scripts": "latest",
     "mktmpdir": "~0.1.1",
-    "mocha": "~2.0.1",
+    "mocha": "~2.1.0",
     "rimraf": "~2.2.8"
   },
   "repository": {
