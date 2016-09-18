@@ -115,6 +115,71 @@ describe('git-scripts', function() {
     });
   });
 
+  describe('when the gitdir is specified in a text file', function() {
+    beforeEach(function(done) {
+      var self = this;
+      mktmpdir(function(err, dir) {
+        exec('git init', {cwd: dir});
+        exec('mv .git .git2', {cwd: dir});
+        exec('echo "gitdir: ./.git2" > .git', {cwd: dir}, function(){
+          self.proj = scripts(dir);
+          done(err);
+        });
+      });
+    });
+
+    describe('isGitRepo()', function() {
+      it('should be true', function(done) {
+        this.proj.isGitRepo(function(result) {
+          expect(result).to.be.true;
+          done();
+        });
+      });
+    });
+
+    describe('installed()', function() {
+      it('should be false', function(done) {
+        this.proj.installed(function(result) {
+          expect(result).to.be.false;
+          done();
+        });
+      });
+    });
+
+    describe('install()', function() {
+      it('should move the old hooks directory and create the new symlink', function(done) {
+        var self = this;
+        this.proj.install(function(err) {
+          var gitPath = self.proj.gitPath
+            , binHooksPath = path.resolve(gitPath, fs.readlinkSync(gitPath + '/hooks'));
+
+          expect(binHooksPath).to.equal(path.normalize(__dirname + '/../bin/hooks'));
+          expect(fs.existsSync(gitPath + '/hooks.old')).to.be.true;
+          done(err);
+        });
+      });
+
+      it('should work if no hooks directory exist', function(done) {
+        var hooksPath = this.proj.path + '/hooks';
+        var self = this;
+
+        rimraf(hooksPath, function(err) {
+          if (err) throw err;
+          self.proj.install(done);
+        });
+      });
+    });
+
+    describe('uninstall()', function() {
+      it('should be an error', function(done) {
+        this.proj.uninstall(function(err) {
+          expect(err).to.be.an.instanceof(Error);
+          done();
+        });
+      });
+    });
+  });
+
   describe('when installed', function() {
     beforeEach(function(done) {
       var self = this;
