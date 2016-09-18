@@ -119,12 +119,21 @@ describe('git-scripts', function() {
     beforeEach(function(done) {
       var self = this;
       mktmpdir(function(err, dir) {
-        exec('git init', {cwd: dir});
-        exec('mv .git .git2', {cwd: dir});
-        exec('echo "gitdir: ./.git2" > .git', {cwd: dir}, function(){
+        function setupProj() {
+          exec('git init', {cwd: dir}, moveGitDir);
+        }
+        function moveGitDir() {
+           exec('mv .git .git2', {cwd: dir}, createGitFile);
+        }
+        function createGitFile() {
+          exec('echo "gitdir: ./.git2" > .git', {cwd: dir}, updateProj);
+        }
+        function updateProj() {
           self.proj = scripts(dir);
           done(err);
-        });
+        }
+
+        setupProj();
       });
     });
 
