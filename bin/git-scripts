@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
-var spawn = require('child_process').spawn
-  , program = require('commander')
+var program = require('commander')
   , pkg = require('../package.json')
   , fs = require('fs');
 
@@ -31,9 +30,5 @@ if (!cmd) {
 
 // execute the subcommand.
 
-var bin = __dirname + '/git-scripts-' + cmd
-  , proc = spawn(bin, args, {stdio: 'inherit', customFds: [0, 1, 2]});
-
-proc.on('close', function(code) {
-  process.exit(code);
-});
+process.argv = args
+require('./git-scripts-' + cmd)
