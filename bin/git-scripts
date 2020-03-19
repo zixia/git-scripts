@@ -33,12 +33,12 @@ if (!cmd) {
 /**
  * Issue #11
  */
-// process.argv = args
-// require('./git-scripts-' + cmd)
+process.argv = args
+require('./git-scripts-' + cmd)
 
-var bin = __dirname + '/git-scripts-' + cmd
-  , proc = require('child_process').spawn(bin, args, {stdio: 'inherit', customFds: [0, 1, 2]});
+// var bin = __dirname + '/git-scripts-' + cmd
+//   , proc = require('child_process').spawn(bin, args, {stdio: 'inherit', customFds: [0, 1, 2]});
 
-proc.on('close', function(code) {
-  process.exit(code);
-});
+// proc.on('close', function(code) {
+//   process.exit(code);
+// });
