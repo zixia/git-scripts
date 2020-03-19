@@ -20,6 +20,9 @@
     "scripts"
   ],
   "author": "Naoyuki Kanezawa <naoyuki.kanezawa@gmail.com>",
+  "contributors": [
+    "Huan LI (李卓桓) <zixia@zixia.net> (https://github.com/huan)"
+  ],
   "license": "MIT",
   "dependencies": {
     "commander": "2.6.0"
