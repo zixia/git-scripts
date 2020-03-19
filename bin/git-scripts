@@ -30,5 +30,15 @@ if (!cmd) {
 
 // execute the subcommand.
 
-process.argv = args
-require('./git-scripts-' + cmd)
+/**
+ * Issue #11
+ */
+// process.argv = args
+// require('./git-scripts-' + cmd)
+
+var bin = __dirname + '/git-scripts-' + cmd
+  , proc = require('child_process').spawn(bin, args, {stdio: 'inherit', customFds: [0, 1, 2]});
+
+proc.on('close', function(code) {
+  process.exit(code);
+});
