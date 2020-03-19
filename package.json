@@ -40,7 +40,6 @@
   },
   "git": {
     "scripts": {
-      "pre-push": "npm test"
     }
   }
 }
