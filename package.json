@@ -11,7 +11,7 @@
     "preuninstall": "node bin/uninstall"
   },
   "bin": {
-    "git-scripts": "node bin/git-scripts"
+    "git-scripts": "bin/git-scripts"
   },
   "keywords": [
     "git",
