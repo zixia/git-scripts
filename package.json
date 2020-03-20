@@ -45,7 +45,7 @@
   },
   "git": {
     "scripts": {
-      "pre-push": "npm test && node scripts/pre-push.js"
+      "pre-push": "node scripts/pre-push.js"
     }
   }
 }
