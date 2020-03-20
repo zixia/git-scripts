@@ -32,15 +32,20 @@
     "git-scripts": "latest",
     "mktmpdir": "~0.1.1",
     "mocha": "~2.1.0",
-    "rimraf": "~2.2.8"
+    "rimraf": "~2.2.8",
+    "shelljs": "^0.8.3"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/nkzawa/git-scripts.git"
   },
+  "publishConfig": {
+    "access": "public",
+    "tag": "next"
+  },
   "git": {
     "scripts": {
-      "pre-push": "npm test"
+      "pre-push": "npm test && node scripts/pre-push.js"
     }
   }
 }
