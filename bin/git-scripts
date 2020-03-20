@@ -33,8 +33,15 @@ if (!cmd) {
 /**
  * Issue #11
  */
-process.argv = args
-require('./git-scripts-' + cmd)
+bin = __dirname + '/git-scripts-' + cmd
+
+process.argv = [
+  process.argv[0],  // /usr/bin/node
+  bin,
+  ...args,
+]
+
+require(bin)
 
 // var bin = __dirname + '/git-scripts-' + cmd
 //   , proc = require('child_process').spawn(bin, args, {stdio: 'inherit', customFds: [0, 1, 2]});
