@@ -37,7 +37,11 @@ jobs:
           registry-url: https://registry.npmjs.org/
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          sudo apt-get install jq
+          npm install
+          NODE_JQ_SKIP_INSTALL_BINARY=true
+          npm install -g pkg-jq
 
       - name: Set Publish Config
         run: ./scripts/package-publish-config-tag.sh
@@ -55,7 +59,7 @@ jobs:
           VERSION=$(npx pkg-jq -r .version)
           if npx version-exists "$NAME" "$VERSION"
           then echo "$NAME@$VERSION exists on NPM, skipped."
-          else npm publish
+          else npm run build && npm publish
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
