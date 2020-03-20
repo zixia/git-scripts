@@ -24,7 +24,6 @@ if (process.env[INNER_PRE_HOOK]) {
   process.exit(0)
 }
 
-shell.exec('npm run lint').code === 0 || process.exit(1)
 shell.rm('-f', 'package-lock.json')
 shell.exec('npm version patch --no-package-lock').code === 0 || process.exit(1)
 process.env[INNER_PRE_HOOK] = '1'
