@@ -1,6 +1,6 @@
 {
   "name": "git-scripts",
-  "version": "0.3.5",
+  "version": "0.4.0",
   "description": "Git hooks integration for Node.js projects",
   "main": "index.js",
   "scripts": {
