@@ -1,7 +1,6 @@
-# git-scripts
+# git-scripts [![NPM Version](https://badge.fury.io/js/git-scripts.svg)](https://www.npmjs.com/package/git-scripts)
 
 ![NPM](https://github.com/zixia/git-scripts/workflows/NPM/badge.svg)
-[![NPM Version](https://badge.fury.io/js/git-scripts.svg)](https://www.npmjs.com/package/git-scripts)
 
 Manage [git hooks](http://git-scm.com/book/en/Customizing-Git-Git-Hooks) with the "git.scripts" field of the package.json like [npm-scripts](https://npmjs.org/doc/scripts.html).
 
