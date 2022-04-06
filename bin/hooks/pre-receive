@@ -5,11 +5,23 @@ var path = require('path')
   , name = path.basename(__filename)
   , project = scripts();
 
+const args = process.argv.slice(2);
+const readline = require('readline').createInterface({
+  input: process.stdin,
+});
 
-project.run(name, process.argv.slice(2), function(err) {
-  if (err) {
-    console.error('Failed to exec ' + name + ' hook script')
-    process.exit(err.code);
-  }
+readline.question('', data => {
+  const arr = data.split(' ')
+  args.push(...arr)
+  readline.close()
+});
+
+setImmediate(() => {
+  project.run(name, args, function(err) {
+    if (err) {
+      console.error('Failed to exec ' + name + ' hook script')
+      process.exit(err.code);
+    }
+  });
 });
 
