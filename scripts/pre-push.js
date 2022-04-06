@@ -40,7 +40,9 @@ if (process.env[INNER_PRE_HOOK]) {
 shell.rm('-f', 'package-lock.json')
 shell.exec('npm version patch --no-package-lock').code === 0 || process.exit(1)
 process.env[INNER_PRE_HOOK] = '1'
-shell.exec('git push').code === 0 || process.exit(1)
+
+const cmd = ['git push', remoteName, localBranch+':'+remoteBranch].join(' ')
+shell.exec(cmd).code === 0 || process.exit(1)
 
 console.info(String.raw`
 ____ _ _        ____            _
