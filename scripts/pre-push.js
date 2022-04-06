@@ -22,6 +22,11 @@ const localCommit = argv[3] || ''
 const remoteBranch = argv[4] || ''
 const remoteCommit = argv[5] || ''
 
+if (localCommit.match(/^0+$/)) {
+  // delete remote branch
+  process.exit(0)
+}
+
 if (process.env[NO_HOOK_VAR]) {
   // user set NO_HOOK=1 to prevent this hook works
   process.exit(0)
