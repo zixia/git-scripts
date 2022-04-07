@@ -37,6 +37,13 @@ if (process.env[INNER_PRE_HOOK]) {
   process.exit(0)
 }
 
+const packageVersion = require('../package.json').version
+const lastCommitMsg = shell.exec('git log --pretty=format:"%s" HEAD^0 -1').stdout
+
+if (packageVersion === lastCommitMsg) {
+  process.exit(0)
+}
+
 shell.rm('-f', 'package-lock.json')
 shell.exec('npm version patch --no-package-lock').code === 0 || process.exit(1)
 process.env[INNER_PRE_HOOK] = '1'
