@@ -17,12 +17,22 @@ const INNER_PRE_HOOK = 'CHATIE_INNER_PRE_HOOK'
 const argv = process.argv.slice(2)
 const remoteName = argv[0] || ''
 const remoteUrl = argv[1] || ''
-const localBranch = argv[2] || ''
-const localCommit = argv[3] || ''
-const remoteBranch = argv[4] || ''
-const remoteCommit = argv[5] || ''
+const refs = []
 
-if (localCommit.match(/^0+$/)) {
+for (let i = 2; i + 4 <= argv.length;) {
+  const ref = {
+    localBranch : argv[i++] || '',
+    localCommit : argv[i++] || '',
+    remoteBranch : argv[i++] || '',
+    remoteCommit : argv[i++] || '',
+  }
+  if (ref.localCommit.match(/^0+$/)) {
+    ref.localBranch = ''
+  }
+  refs.push(ref)
+}
+
+if (refs[0] && refs[0].localCommit.match(/^0+$/)) {
   // delete remote branch
   process.exit(0)
 }
@@ -48,7 +58,8 @@ shell.rm('-f', 'package-lock.json')
 shell.exec('npm version patch --no-package-lock').code === 0 || process.exit(1)
 process.env[INNER_PRE_HOOK] = '1'
 
-const cmd = ['git push', remoteName, remoteBranch ? localBranch + ':' + remoteBranch : ''].join(' ')
+const refMaps = refs.map(ref => ref.remoteBranch ? ref.localBranch + ':' + ref.remoteBranch : '')
+const cmd = ['git push', remoteName, ...refMaps].join(' ')
 shell.exec(cmd).code === 0 || process.exit(1)
 
 console.info(String.raw`
