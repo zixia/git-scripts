@@ -14,6 +14,19 @@ const shell = require('shelljs')
 const NO_HOOK_VAR = 'NO_HOOK'
 const INNER_PRE_HOOK = 'CHATIE_INNER_PRE_HOOK'
 
+const argv = process.argv.slice(2)
+const remoteName = argv[0] || ''
+const remoteUrl = argv[1] || ''
+const localBranch = argv[2] || ''
+const localCommit = argv[3] || ''
+const remoteBranch = argv[4] || ''
+const remoteCommit = argv[5] || ''
+
+if (localCommit.match(/^0+$/)) {
+  // delete remote branch
+  process.exit(0)
+}
+
 if (process.env[NO_HOOK_VAR]) {
   // user set NO_HOOK=1 to prevent this hook works
   process.exit(0)
@@ -24,10 +37,19 @@ if (process.env[INNER_PRE_HOOK]) {
   process.exit(0)
 }
 
+const packageVersion = require('../package.json').version
+const lastCommitMsg = shell.exec('git log --pretty=format:"%s" HEAD^0 -1', {silent: true}).stdout
+
+if (packageVersion === lastCommitMsg) {
+  process.exit(0)
+}
+
 shell.rm('-f', 'package-lock.json')
 shell.exec('npm version patch --no-package-lock').code === 0 || process.exit(1)
 process.env[INNER_PRE_HOOK] = '1'
-shell.exec('git push').code === 0 || process.exit(1)
+
+const cmd = ['git push', remoteName, remoteBranch ? localBranch + ':' + remoteBranch : ''].join(' ')
+shell.exec(cmd).code === 0 || process.exit(1)
 
 console.info(String.raw`
 ____ _ _        ____            _
