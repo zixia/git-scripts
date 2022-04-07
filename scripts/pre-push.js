@@ -38,7 +38,7 @@ if (process.env[INNER_PRE_HOOK]) {
 }
 
 const packageVersion = require('../package.json').version
-const lastCommitMsg = shell.exec('git log --pretty=format:"%s" HEAD^0 -1').stdout
+const lastCommitMsg = shell.exec('git log --pretty=format:"%s" HEAD^0 -1', {silent: true}).stdout
 
 if (packageVersion === lastCommitMsg) {
   process.exit(0)
