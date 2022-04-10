@@ -58,6 +58,9 @@ shell.rm('-f', 'package-lock.json')
 shell.exec('npm version patch --no-package-lock').code === 0 || process.exit(1)
 process.env[INNER_PRE_HOOK] = '1'
 
+const version = shell.exec('git log --pretty=format:"%s" HEAD^0 -1', { silent : true }).stdout
+shell.exec(`git tag -d v${version}`).code === 0 || process.exit(1)
+
 const refMaps = refs.map(ref => ref.remoteBranch ? ref.localBranch + ':' + ref.remoteBranch : '')
 const cmd = ['git push', remoteName, ...refMaps].join(' ')
 shell.exec(cmd).code === 0 || process.exit(1)
