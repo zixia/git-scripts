@@ -49,7 +49,7 @@ if (refs[0] && refs[0].localCommit.match(/^0+$/)) {
 
 console.info('[Step-1]', 'Checking last commit...', '\n')
 const packageVersion = require('../package.json').version
-const lastCommitMsg = checkReturn(shell.exec('git log --pretty=format:"%s" HEAD^0 -1', {silent: true})).stdout
+const lastCommitMsg = checkReturn(shell.exec('git log --pretty=format:"%s" HEAD^0 -1', { silent : true })).stdout
 
 if (packageVersion === lastCommitMsg) {
   console.info('[Step-1]', 'No need to bump the package version.', '\n')
@@ -57,8 +57,8 @@ if (packageVersion === lastCommitMsg) {
 }
 
 console.info('[Step-2]', 'Bump the package version...', '\n')
-checkReturn(shell.rm('-f', 'package-lock.json', { silent : true }))
-checkReturn(shell.exec('npm version patch --no-package-lock', {silent: true}))
+checkReturn(shell.rm('-f', 'package-lock.json'))
+checkReturn(shell.exec('npm version patch --no-package-lock', { silent : true }))
 process.env[INNER_PRE_HOOK] = '1'
 
 console.info('[Step-3]', 'Remove git tag...', '\n')
