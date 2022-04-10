@@ -18,7 +18,10 @@ readline
   .on('close', () => {
     project.run(name, args, function (err) {
       if (err) {
-        console.error('Failed to exec ' + name + ' hook script')
+        // If the hook actually succeeded, but you want git to think it failed, return 42
+        if (err.code !== 42) {
+          console.error('Failed to exec ' + name + ' hook script')
+        }
         process.exit(err.code);
       }
     });
