@@ -47,23 +47,28 @@ if (refs[0] && refs[0].localCommit.match(/^0+$/)) {
   process.exit(0)
 }
 
+console.info('[Step-1]', 'Checking last commit...', '\n')
 const packageVersion = require('../package.json').version
-const lastCommitMsg = shell.exec('git log --pretty=format:"%s" HEAD^0 -1', {silent: true}).stdout
+const lastCommitMsg = checkReturn(shell.exec('git log --pretty=format:"%s" HEAD^0 -1', {silent: true})).stdout
 
 if (packageVersion === lastCommitMsg) {
+  console.info('[Step-1]', 'No need to bump the package version.', '\n')
   process.exit(0)
 }
 
-shell.rm('-f', 'package-lock.json')
-shell.exec('npm version patch --no-package-lock').code === 0 || process.exit(1)
+console.info('[Step-2]', 'Bump the package version...', '\n')
+checkReturn(shell.rm('-f', 'package-lock.json', { silent : true }))
+checkReturn(shell.exec('npm version patch --no-package-lock', {silent: true}))
 process.env[INNER_PRE_HOOK] = '1'
 
-const version = shell.exec('git log --pretty=format:"%s" HEAD^0 -1', { silent : true }).stdout
-shell.exec(`git tag -d v${version}`).code === 0 || process.exit(1)
+console.info('[Step-3]', 'Remove git tag...', '\n')
+const version = checkReturn(shell.exec('git log --pretty=format:"%s" HEAD^0 -1', { silent : true })).stdout
+checkReturn(shell.exec(`git tag -d v${version}`, { silent : true }))
 
+console.info('[Step-4]', 'Push...', '\n')
 const refMaps = refs.map(ref => ref.remoteBranch ? ref.localBranch + ':' + ref.remoteBranch : '')
 const cmd = ['git push', remoteName, ...refMaps].join(' ')
-shell.exec(cmd).code === 0 || process.exit(1)
+checkReturn(shell.exec(cmd, { silent : true }))
 
 console.info(String.raw`
 ____ _ _        ____            _
@@ -91,3 +96,12 @@ console.info(`
 `)
 
 process.exit(42)
+
+function checkReturn(ret) {
+  if (ret.code !== 0) {
+    const line = '------------------------------------------'
+    console.error(`Error:\n${line}\n\n${ret.stderr}\n\n${line}\n`)
+    process.exit(1)
+  }
+  return ret
+}
