@@ -86,7 +86,7 @@ console.info(String.raw`
 
 console.info(`
 
- ### Npm verion bumped and pushed by inner push inside hook pre-push ###
+ ### Npm version bumped and pushed by inner push inside hook pre-push ###
  ------- vvvvvvv outer push will be canceled, never mind vvvvvvv -------
 
 `)
