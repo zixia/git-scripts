@@ -71,27 +71,23 @@ const cmd = ['git push', remoteName, ...refMaps].join(' ')
 checkReturn(shell.exec(cmd, { silent : true }))
 
 console.info(String.raw`
-____ _ _        ____            _
-/ ___(_) |_     |  _ \ _   _ ___| |__
+  ____ _ _        ____            _
+ / ___(_) |_     |  _ \ _   _ ___| |__
 | |  _| | __|    | |_) | | | / __| '_ \
 | |_| | | |_     |  __/| |_| \__ \ | | |
-\____|_|\__|    |_|    \__,_|___/_| |_|
+ \____|_|\__|    |_|    \__,_|___/_| |_|
 
-____                              _ _
+ ____                              _ _
 / ___| _   _  ___ ___ ___  ___  __| | |
 \___ \| | | |/ __/ __/ _ \/ _ \/ _^ | |
-___) | |_| | (_| (_|  __/  __/ (_| |_|
+ ___) | |_| | (_| (_|  __/  __/ (_| |_|
 |____/ \__,_|\___\___\___|\___|\__,_(_)
-
 `)
 
 console.info(`
 
-
-
- ### Npm verion bumped and pushed by inner push inside hook pre-push ###"
- ------- vvvvvvv outer push will be canceled, never mind vvvvvvv -------"
-
+ ### Npm version bumped and pushed by inner push inside hook pre-push ###
+ ------- vvvvvvv outer push will be canceled, never mind vvvvvvv -------
 
 `)
 
